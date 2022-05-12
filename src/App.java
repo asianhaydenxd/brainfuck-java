@@ -77,21 +77,29 @@ class Interpreter {
 
     void interpret() throws Exception {
         while (this.tokenNum < this.code.length()) {
-            switch (this.code.charAt(this.tokenNum)) {
+            char character = this.code.charAt(this.tokenNum);
+            switch (character) {
                 case '>':
                     tape.shiftRight();
+                    tokenNum++;
                     break;
                 case '<':
                     tape.shiftLeft();
+                    tokenNum++;
                     break;
                 case '+':
                     tape.increment();
+                    tokenNum++;
                     break;
                 case '-':
                     tape.decrement();
+                    tokenNum++;
                     break;
                 case '[':
-                    if (tape.getCell().isTrue()) loopStack.push(tokenNum);
+                    if (tape.getCell().isTrue()) {
+                        loopStack.push(tokenNum);
+                        tokenNum++;
+                    }
                     else {
                         int skipCount = 1;
                         while (skipCount > 0) {
@@ -105,14 +113,15 @@ class Interpreter {
                                     break;
                             }
                         }
+                        tokenNum++;
                     }
                     break;
                 case ']':
                     if (tape.getCell().isTrue()) tokenNum = loopStack.pop();
+                    else tokenNum++;
                     break;
             }
-            
-            tokenNum++;
+            System.out.println("(" + character + ") " + this.tape.readTape());
         }
     }
 }
