@@ -1,3 +1,5 @@
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Scanner;
@@ -164,7 +166,15 @@ class Interpreter {
 }
 
 public class App {
+    static Interpreter interpreter;
+
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+        Path filePath = Path.of("Main.bf");
+        String content = Files.readString(filePath);
+
+        interpreter = new Interpreter(content);
+        interpreter.interpret();
+
+        interpreter.close();
     }
 }
