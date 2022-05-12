@@ -154,6 +154,9 @@ class Interpreter {
                     tape.getCell().value = stringQueue.read();
                     tokenNum++;
                     break;
+                default:
+                    tokenNum++;
+                    break;
             }
             // System.out.println("(" + character + ") " + this.tape.readTape());
         }
