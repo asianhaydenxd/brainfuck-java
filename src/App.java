@@ -155,7 +155,7 @@ class Interpreter {
                     tokenNum++;
                     break;
             }
-            System.out.println("(" + character + ") " + this.tape.readTape());
+            // System.out.println("(" + character + ") " + this.tape.readTape());
         }
     }
 }
