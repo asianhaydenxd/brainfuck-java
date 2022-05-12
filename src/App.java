@@ -70,9 +70,14 @@ class Interpreter {
     Tape tape = new Tape();
     int tokenNum = 0;
     Stack<Integer> loopStack = new Stack<Integer>();
+    Scanner scanner = new Scanner(System.in);
 
     public Interpreter(String code) {
         this.code = code;
+    }
+
+    void close() {
+        this.scanner.close();
     }
 
     void interpret() throws Exception {
