@@ -1,7 +1,16 @@
 import java.util.ArrayList;
+import java.util.Stack;
 
 class Cell {
     int value = 0;
+
+    boolean isTrue() {
+        return this.value > 0;
+    }
+
+    boolean isFalse() {
+        return this.value == 0;
+    }
 
     void increment() {
         value += 1;
@@ -20,6 +29,10 @@ class Tape {
 
     public Tape() {
         tape.add(new Cell());
+    }
+
+    Cell getCell() {
+        return this.tape.get(this.pointer);
     }
 
     void shiftRight() {
@@ -45,13 +58,14 @@ class Interpreter {
     String code;
     Tape tape = new Tape();
     int tokenNum = 0;
+    Stack<Integer> loopStack = new Stack<Integer>();
 
     public Interpreter(String code) {
         this.code = code;
     }
 
     void interpret() throws Exception {
-        while (tokenNum < this.code.length()) {
+        while (this.tokenNum < this.code.length()) {
             switch (this.code.charAt(this.tokenNum)) {
                 case '>':
                     tape.shiftRight();
@@ -64,6 +78,26 @@ class Interpreter {
                     break;
                 case '-':
                     tape.decrement();
+                    break;
+                case '[':
+                    if (tape.getCell().isTrue()) loopStack.push(tokenNum);
+                    else {
+                        int skipCount = 1;
+                        while (skipCount > 0) {
+                            tokenNum++;
+                            switch (this.code.charAt(this.tokenNum)) {
+                                case '[':
+                                    skipCount++;
+                                    break;
+                                case ']':
+                                    skipCount--;
+                                    break;
+                            }
+                        }
+                    }
+                    break;
+                case ']':
+                    if (tape.getCell().isTrue()) tokenNum = loopStack.pop();
                     break;
             }
             
