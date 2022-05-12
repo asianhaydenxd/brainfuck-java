@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.Scanner;
 
 class Cell {
     int value = 0;
@@ -65,12 +66,31 @@ class Tape {
     }
 }
 
+class StringQueue {
+    String queue = "";
+
+    void add(String input) {
+        this.queue += input;
+    }
+
+    char read() {
+        char readChar = this.queue.charAt(0);
+        this.queue = this.queue.substring(1);
+        return readChar;
+    }
+
+    boolean isEmpty() {
+        return this.queue.length() == 0; 
+    }
+}
+
 class Interpreter {
     String code;
     Tape tape = new Tape();
     int tokenNum = 0;
     Stack<Integer> loopStack = new Stack<Integer>();
     Scanner scanner = new Scanner(System.in);
+    StringQueue stringQueue = new StringQueue();
 
     public Interpreter(String code) {
         this.code = code;
@@ -124,6 +144,11 @@ class Interpreter {
                 case ']':
                     if (tape.getCell().isTrue()) tokenNum = loopStack.pop();
                     else tokenNum++;
+                    break;
+                case ',':
+                    if (stringQueue.isEmpty()) stringQueue.add(scanner.nextLine());
+                    tape.getCell().value = stringQueue.read();
+                    tokenNum++;
                     break;
             }
             System.out.println("(" + character + ") " + this.tape.readTape());
