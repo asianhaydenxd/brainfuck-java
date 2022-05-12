@@ -18,6 +18,10 @@ class Tape {
     ArrayList<Cell> tape = new ArrayList<Cell>();
     private int pointer = 0;
 
+    public Tape() {
+        tape.add(new Cell());
+    }
+
     void shiftRight() {
         this.pointer += 1;
         if (this.pointer == this.tape.size()) this.tape.add(new Cell());
