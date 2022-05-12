@@ -145,6 +145,10 @@ class Interpreter {
                     if (tape.getCell().isTrue()) tokenNum = loopStack.pop();
                     else tokenNum++;
                     break;
+                case '.':
+                    System.out.print((char) tape.getCell().value);
+                    tokenNum++;
+                    break;
                 case ',':
                     if (stringQueue.isEmpty()) stringQueue.add(scanner.nextLine());
                     tape.getCell().value = stringQueue.read();
