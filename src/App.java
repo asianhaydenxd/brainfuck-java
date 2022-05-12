@@ -44,14 +44,15 @@ class Tape {
 class Interpreter {
     String code;
     Tape tape = new Tape();
+    int tokenNum = 0;
 
     public Interpreter(String code) {
         this.code = code;
     }
 
     void interpret() throws Exception {
-        for (char character : this.code.toCharArray()) {
-            switch (character) {
+        while (tokenNum < this.code.length()) {
+            switch (this.code.charAt(this.tokenNum)) {
                 case '>':
                     tape.shiftRight();
                     break;
@@ -65,6 +66,8 @@ class Interpreter {
                     tape.decrement();
                     break;
             }
+            
+            tokenNum++;
         }
     }
 }
