@@ -52,6 +52,17 @@ class Tape {
     void decrement() {
         this.tape.get(this.pointer).decrement();
     }
+
+    String readTape() {
+        String acc = "";
+
+        for (int i = 0; i < this.tape.size(); i++) {
+            if (i == this.pointer) acc += " >" + Integer.toString(this.tape.get(i).value) + "< ";
+            else acc += "  " + Integer.toString(this.tape.get(i).value) + "  ";
+        }
+
+        return acc;
+    }
 }
 
 class Interpreter {
