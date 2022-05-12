@@ -43,9 +43,29 @@ class Tape {
 
 class Interpreter {
     String code;
+    Tape tape = new Tape();
 
     public Interpreter(String code) {
         this.code = code;
+    }
+
+    void interpret() throws Exception {
+        for (char character : this.code.toCharArray()) {
+            switch (character) {
+                case '>':
+                    tape.shiftRight();
+                    break;
+                case '<':
+                    tape.shiftLeft();
+                    break;
+                case '+':
+                    tape.increment();
+                    break;
+                case '-':
+                    tape.decrement();
+                    break;
+            }
+        }
     }
 }
 
